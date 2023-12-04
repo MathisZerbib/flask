@@ -133,28 +133,20 @@ def hello():
 @app.route('/post_example', methods=['POST'])
 def post_example():
     if request.method == 'POST':
-        # Create a new conversation and memory for each request
-        llm = TogetherLLM(model='Open-Orca/Mistral-7B-OpenOrca', temperature=0.9, max_tokens=624)
-        prompt = ChatPromptTemplate(
-            messages=[
-                SystemMessagePromptTemplate.from_template("You are a nice chatbot having a conversation with a human."),
-                MessagesPlaceholder(variable_name="chat_history"),
-                HumanMessagePromptTemplate.from_template("{question}")
-            ]
-        )
-        memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-        conversation = LLMChain(llm=llm, prompt=prompt, verbose=True, memory=memory)
-
         # Access the data sent in the POST request
         data = request.get_json()  # Assuming the data is sent as JSON
+        # You can also use request.form to get form data
+        # data = request.form
 
         # Process the data
+        # For example, if the JSON contains a key 'message'
         if 'question' in data:
             received_message = data['question']
-            o = predict(received_message, conversation)
+            o=predict(received_message)
+
             return f"Received message: {o}"
         else:
-            return "No 'question' key found in the POST request data"
+            return "No 'message' key found in the POST request data"
     else:
         return "This endpoint only accepts POST requests"
 
