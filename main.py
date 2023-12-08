@@ -22,6 +22,10 @@ def download_and_convert_image_from_ipfs(cid, output_path):
     except Exception as e:
         print(f"Error downloading/convert image from IPFS: {e}")
 
+@app.route('/status', methods=['GET'])  
+def status():
+    return "OK", 200
+    
 @app.route('/run-similarity', methods=['POST'])
 def run_similarity():
     data = request.get_json()
