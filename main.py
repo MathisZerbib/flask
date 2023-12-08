@@ -22,9 +22,9 @@ def download_and_convert_image_from_ipfs(cid, output_path):
     except Exception as e:
         print(f"Error downloading/convert image from IPFS: {e}")
 
-@app.route('/status', methods=['GET'])  
-def status():
-    return "OK", 200
+@app.route('/')
+def index():
+    return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
     
 @app.route('/run-similarity', methods=['POST'])
 def run_similarity():
@@ -43,8 +43,5 @@ def run_similarity():
         print(f"Error running similarity script: {e}")
         return "Internal Server Error", 500
 
-if __name__ == '__main__':
-    port = 3000
-    app.run(host='0.0.0.0', port=port)
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
